@@ -1,0 +1,13 @@
+name = "PowerGridNoise"
+uuid = "f331c818-237e-40db-bdde-b0d09ffa6503"
+authors = ["buettner <buettner@pik-potsdam.de> and contributors"]
+version = "0.1.0"
+
+[compat]
+julia = "1.7"
+
+[extras]
+Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
+
+[targets]
+test = ["Test"]
