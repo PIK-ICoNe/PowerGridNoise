@@ -8,6 +8,5 @@ It features a Data-Driven Model of the Power-Grid Frequency Dynamics [1](https:/
 [2] M. Anvari et al., "Data-Driven Load Profiles and the Dynamics of Residential Electric Power Consumption", Arxiv, 2020
 
 # ToDos:
-1. Add rng's to make the curves reproducible
-2. Mehrnaz gave me the code for the frequency paper. I should look up the size of the power jumps they used.
-3. I should check the proper parameters for the damping terms and noise amplitudes in the load profile paper.
+1. Mehrnaz gave me the code for the frequency paper. I should look up the size of the power jumps they used.
+2. Enable possibility to use arbitrary number of OU process for the demand curve.
