@@ -9,4 +9,7 @@ module PowerGridNoise
 
     include("load_profile.jl")
     export load_profile_model, ornstein_uhlenbeck, ornstein_uhlenbeck_ϵ
+
+    include("wind_power.jl")
+    export wind_power_model
 end

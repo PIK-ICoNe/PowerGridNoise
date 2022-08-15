@@ -24,13 +24,9 @@ function pg_frequency_model(tspan::NTuple{2, Float64}; P0::Float64 = 0.001641, �
     p = vcat([c1, c2, P0, ϵ], dispatch_times) # Simulation parameters
 
     dt = 0.01 # fixed step size
-
-    #pg_ω_deter_step = pg_ω_deter_step(du, u, p, t)            # Deterministic part of the frequency dynamics: steps in power due to new dispatches
-    #pg_ω_noise = pg_ω_noise(du,u,p,t)                         # Stochastic part of the frequency dynamics
-    #dispatch_condition = dispatch_condition(u, t, integrator) # Dispatches only occur during the scheduled times
-
+    
     dispatch = DiscreteCallback(dispatch_condition, affect!)  # Callback which checks if a dispatch should occur and samples a new power mismatch at the dispatch
-    prob_sde = SDEProblem(pg_ω_deter_step, pg_ω_noise, [0.0, 0.0], tspan, p, Noise = WienerProcess(0.0, 0.0, 0.0))
+    prob_sde = SDEProblem(pg_ω_deter_step, pg_ω_noise, [0.0, 0.0], tspan, p, noise = WienerProcess(0.0, 0.0, 0.0))
     sol = solve(prob_sde, tstops = dispatch_times, callback = dispatch, dt = dt, adaptive = false)
 
     return sol #, t -> (sol(t)[2], sol(t, Val{1})[2]) # ω and dω
