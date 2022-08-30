@@ -12,4 +12,7 @@ module PowerGridNoise
 
     include("wind_power.jl")
     export wind_power_model
+
+    include("solar_PV_power.jl")
+    export solar_PV_power_model
 end

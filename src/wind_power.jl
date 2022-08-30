@@ -12,7 +12,7 @@ Generates an intermittent wind power fluctuation time series by use of the Lange
 - `D::Float64`: Intermittence strength
 - `γ::Float64`: Damping coefficient
 - `g::Float64`
-- `x0::Float64`
+- `x0::Float64:` Initial condition
 - `fluc_bound::Float64`: Limit which the fluctuation should not exceed. Everything above this is cut off.
 """
 function wind_power_model(tspan; D::Float64 = 0.1, γ::Float64 = 1.0, g::Float64 = 0.5, x0::Float64 = 2.0, ϵ::Float64 = 1.0, fluc_bound::Float64 = 1.0)
