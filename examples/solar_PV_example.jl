@@ -15,16 +15,15 @@ plot(sol, idxs = 1)
 
 ##
 import PowerGridNoise.D_drift
+Z = collect(0.02:0.001:1.0)
 
-Z = collect(0.02:0.001:0.1)
-
-D_d = map(x -> D_drift(x, 0.021, 0.0, 1.0, 0.0), Z)
+D_d = map(x -> D_drift(x = x, α = 0.021, symmetry = 0.0, cloudy = 0.0, sunny = 0.0), Z)
 
 plot(Z, D_d)
 
 ##
 import PowerGridNoise.D_diff
 
-D_dif = map(x -> D_diff(x, 0.15), Z)
+D_dif = map(x -> D_diff(x = x, D_diff_0 = 0.15), Z)
 
 plot(Z, D_dif)

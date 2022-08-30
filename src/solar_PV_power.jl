@@ -26,7 +26,7 @@ function clear_sky_deterministic(du, u, p, t)
     α, _, _, _, symmetry, cloudy, sunny = p
 
     du[1] = u[2] + u[3]
-    du[2] = D_drift(u[1], α, symmetry, cloudy, sunny)
+    du[2] = D_drift(x = u[1],α = α, symmetry = symmetry, cloudy = cloudy, sunny = sunny)
     du[3] = 0.0 # Diffusion
     return nothing
 end
@@ -34,8 +34,8 @@ end
 function clear_sky_noise(du, u, p, t)    
     D_diff_0 = p[2]
     du[1] = 0.0 
-    du[2] = 0.0
-    du[3] = sqrt(D_diff(u[1], D_diff_0))
+    du[2] = 0.0 # Drift
+    du[3] = sqrt(D_diff(x = u[1], D_diff_0 = D_diff_0)) 
     return nothing
 end
 
@@ -44,7 +44,7 @@ end
 
 Function for the Drift Term / First Kramers-Moyal (KM) coefficient.
 """
-function D_drift(x, α::Float64, symmetry, cloudy, sunny)
+function D_drift(;x, α::Float64, symmetry, cloudy, sunny)
     D_drift = α * (symmetry * (-32 * x^3 + 4 * x) + (symmetry - 1) * (-40 * x^3 + 4 * x + 0.3) + cloudy * (-20 * (x + 0.2)) + sunny * (-20 * (x - 0.2)))
     return D_drift
 end
@@ -54,7 +54,7 @@ end
 
 Function for the Diffusion Term / Second Kramers-Moyal (KM) coefficient.
 """
-function D_diff(x, D_diff_0)
+function D_diff(;x, D_diff_0)
     D_drift = D_diff_0 * sqrt(abs(x * (x + 0.4)))
 
     return D_drift
