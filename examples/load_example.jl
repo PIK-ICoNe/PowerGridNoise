@@ -6,6 +6,6 @@ default(grid = false, foreground_color_legend = nothing, bar_edges = false,  lw=
 
 ##
 Random.seed!(123)
-P_fluc, t = load_profile_model((0.0, 100.0))
+P_fluc, t = load_profile_model((0.0, 500.0))
 
 plot(t, P_fluc, legend = false, xlabel = L"t[s]", ylabel = L"P_{fluc} [W]")

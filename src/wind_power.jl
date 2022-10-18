@@ -14,13 +14,17 @@ Generates an intermittent wind power fluctuation time series by use of the Lange
 - `g::Float64`
 - `x0::Float64`
 - `fluc_bound::Float64`: Limit which the fluctuation should not exceed. Everything above this is cut off.
+- `Δt::Float64`: Swing in time of the dynamical process
 """
-function wind_power_model(tspan; D::Float64 = 0.1, γ::Float64 = 1.0, g::Float64 = 0.5, x0::Float64 = 2.0, ϵ::Float64 = 1.0, fluc_bound::Float64 = 1.0)
+function wind_power_model(tspan::NTuple{2, Float64}; D::Float64 = 0.1, γ::Float64 = 1.0, g::Float64 = 0.5, x0::Float64 = 2.0, ϵ::Float64 = 1.0, fluc_bound::Float64 = 1.0, Δt::Float64 = 1000.0)
     p = [g, x0, γ, D, ϵ] # Create the parameter array
     u0 = [g * x0, 0.0] # Initial condition
+    tspan = (tspan[1], tspan[2] + Δt)
 
     prob_sde_wind = SDEProblem(wind_model_deterministic, wind_model_noise, u0, tspan, p, noise = WienerProcess(0.0, 0.0, 0.0))
     sol = solve(prob_sde_wind)
+
+    swing_in_t_idx = findfirst(sol.t .>= Δt) 
 
     mean_x = g * x0
     x = sol[1, :] .- mean_x # Shifting the mean of the time series to 0.0,
@@ -32,7 +36,11 @@ function wind_power_model(tspan; D::Float64 = 0.1, γ::Float64 = 1.0, g::Float64
     lower_bound_idx = findall(x .< -fluc_bound)
     x[lower_bound_idx] .= -fluc_bound
 
-    return x, sol.t
+    # Throw away the part of the time series before Δt
+    x = x[swing_in_t_idx:end]
+    t = sol.t[swing_in_t_idx:end] .- Δt
+
+    return x, t
 end
 
 function wind_model_deterministic(du, u, p, t)

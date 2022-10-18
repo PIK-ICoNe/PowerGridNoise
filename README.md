@@ -13,6 +13,7 @@ It features:
 [3] K. Schmietendorf et al., "The impact of turbulent renewable energy production on power grid stability and quality", EUROPEAN PHYSICAL JOURNAL B, 2017
 
 # ToDos:
-1. Mehrnaz gave me the code for the frequency paper. I should look up the size of the power jumps they used.
-2. Enable possibility to use arbitrary number of OU process for the demand curve?
-3. Add Mehrnaz Solar Model
+1. Use the power jumps defined in the frequency paper [1]
+2. Enable possibility to use arbitrary number of OU process for the demand curve
+3. Add a model for solar fluctuations
+4. Use a swing in time for the frequency model [1] as well
