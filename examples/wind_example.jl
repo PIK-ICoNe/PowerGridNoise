@@ -8,8 +8,8 @@ default(grid = false, foreground_color_legend = nothing, bar_edges = false,  lw=
 ##
 D = 0.1 # Intermittence strength
 
-tspan = (0.0, 500.0)
+tspan = (0.0, 1000.0)
 
-x, t = wind_power_model(tspan, D = D)
+x, t = wind_power_model(tspan, D = D, Δt = 10000.0)
 
 plot(t, x, idxs = 1, legend = false, xlabel = L"t[s]", ylabel = L"x(t)")

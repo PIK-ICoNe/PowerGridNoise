@@ -21,7 +21,7 @@ function wind_power_model(tspan::NTuple{2, Float64}; D::Float64 = 0.1, γ::Float
     u0 = [g * x0, 0.0] # Initial condition
     tspan = (tspan[1], tspan[2] + Δt)
 
-    prob_sde_wind = SDEProblem(wind_model_deterministic, wind_model_noise, u0, tspan, p, noise = WienerProcess(0.0, 0.0, 0.0))
+    prob_sde_wind = SDEProblem(wind_model_deterministic, wind_model_noise, u0, tspan, p, noise = WienerProcess(0.0, 0.0, 0.0), tstops = Δt)
     sol = solve(prob_sde_wind)
 
     swing_in_t_idx = findfirst(sol.t .>= Δt) 
